@@ -1,13 +1,30 @@
 import { Link } from "react-router-dom";
+import PasswordInput from "../Input/PasswordInput";
+import { useState } from "react";
+import { validateEmail } from "../../utils/helper";
 
 const LoginForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    if (!validateEmail(email)) {
+        setError('Please enter a valid email addresse.')
+        return
+    }
+    if (!password){
+        setError('Please enter a password')
+        return
+    }
+    setError("")
+  }
   return (
     <div className="flex justify-center items-center h-[75vh]   ">
       <div className="border rounded-lg bg-white px-10 py-10">
         <form
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
+          onSubmit={handleLogin}
         >
           <h4 className="text-2xl mb-7">Login</h4>
 
@@ -15,10 +32,13 @@ const LoginForm = () => {
             <input
               type="text"
               placeholder="Email"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none block ps-10 p-2.5 
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none block ps-5 p-2.5 
                         w-full"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
             />
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+
+            <div className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none">
               <svg
                 className="w-4 h-4 text-gray-500 dark:text-gray-400"
                 aria-hidden="true"
@@ -31,7 +51,8 @@ const LoginForm = () => {
               </svg>
             </div>
           </div>
-
+          <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
+          {error &&  <p className="text-red-500">{error}</p>}
           <button
             type="submit"
             className="border border-blue-700 w-full mt-5 p-2 font-bold tracking-widest hover:bg-blue-500 hover:text-white transition-colors duration-300 ease-in-out  "
