@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import PasswordInput from "../../components/Input/PasswordInput";
 import { validateEmail } from "../../utils/helper";
@@ -77,7 +77,7 @@ const SignUpForm = () => {
           </button>
           <p className="text-sm text-center mt-4">
             Already have an account?{" "}
-            <Link to="/signup" className="font-medium text-primary underline">
+            <Link to="/login" className="font-medium text-primary underline">
               Click here to Login.
             </Link>
           </p>

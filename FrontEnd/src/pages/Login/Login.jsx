@@ -1,5 +1,5 @@
-import LoginForm from "../../components/NavBar/LoginForm"
-import NavBar from "../../components/NavBar/NavBar"
+import LoginForm from "./LoginForm";
+import NavBar from "../../components/NavBar/NavBar";
 
 const Login = () => {
   return (
@@ -7,7 +7,7 @@ const Login = () => {
       <NavBar />
       <LoginForm />
     </>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
