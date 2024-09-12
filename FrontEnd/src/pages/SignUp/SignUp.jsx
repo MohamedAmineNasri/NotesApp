@@ -1,9 +1,12 @@
+import NavBar from "../../components/NavBar/NavBar"
+import SignUpForm from "./SignUpForm"
 
 const SignUp = () => {
   return (
-    <div>
-      signUp
-    </div>
+    <>
+      <NavBar />
+      <SignUpForm />
+    </>
   )
 }
 

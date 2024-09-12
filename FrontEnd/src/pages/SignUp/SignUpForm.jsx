@@ -1,41 +1,58 @@
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import PasswordInput from "../Input/PasswordInput";
-import { useState } from "react";
+import PasswordInput from "../../components/Input/PasswordInput";
 import { validateEmail } from "../../utils/helper";
-
-const LoginForm = () => {
+const SignUpForm = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
-  const handleLogin = async (e) => {
-    e.preventDefault()
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    if (!name) {
+      setError("Please enter a user name");
+      return
+    }
     if (!validateEmail(email)) {
-        setError('Please enter a valid email addresse.')
-        return
+      setError("Please enter a valid email addresse.");
+      return;
     }
-    if (!password){
-        setError('Please enter a password')
-        return
+    if (!password) {
+      setError("Please enter a password");
+      return
     }
-    setError("")
-  }
+    setError("");
+  };
   return (
     <div className="flex justify-center items-center h-[75vh]   ">
       <div className="border rounded-lg bg-white px-10 py-10">
-        <form
-          onSubmit={handleLogin}
-        >
-          <h4 className="text-2xl mb-7 flex justify-center">Login</h4>
+        <form onSubmit={handleSignUp}>
+          <h4 className="text-2xl mb-7 flex justify-center">
+            Create an Account
+          </h4>
 
           <div className="relative">
             <input
               type="text"
-              placeholder="Email"
+              placeholder="Name"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none block ps-5 p-2.5 
-                        w-full"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                      w-full"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Email"
+              className="bg-gray-50 border mt-5 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none block ps-5 p-2.5 
+                      w-full"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <PasswordInput
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
 
             <div className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none">
@@ -51,18 +68,17 @@ const LoginForm = () => {
               </svg>
             </div>
           </div>
-          <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
-          {error &&  <p className="text-red-500">{error}</p>}
+          {error && <p className="text-red-500">{error}</p>}
           <button
             type="submit"
             className="border border-blue-700 w-full mt-5 p-2 font-bold tracking-widest hover:bg-blue-500 hover:text-white transition-colors duration-300 ease-in-out  "
           >
-            Login
+            Register
           </button>
           <p className="text-sm text-center mt-4">
-            Not registered yet?{" "}
+            Already have an account?{" "}
             <Link to="/signup" className="font-medium text-primary underline">
-              Click here to create an account.
+              Click here to Login.
             </Link>
           </p>
         </form>
@@ -71,4 +87,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SignUpForm;
