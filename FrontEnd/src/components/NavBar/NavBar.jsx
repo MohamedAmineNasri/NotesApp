@@ -3,9 +3,10 @@ import ProfileInfo from "../Cards/ProfileInfo";
 import SearchBar from "../SearchBar/SearchBar";
 import { useState } from "react";
 
-const NavBar = () => {
+const NavBar = ({ userInfo }) => {
   const navigate = useNavigate();
   const onLogout = () => {
+    localStorage.clear()
     navigate("/login");
   };
   const [searchQuery, SetSearchQuery] = useState("");
@@ -28,7 +29,7 @@ const NavBar = () => {
         onClearSearch={onClearSearch}
       />
 
-      <ProfileInfo onLogout={onLogout} />
+      <ProfileInfo userInfo={userInfo} onLogout={onLogout} />
     </div>
   );
 };
