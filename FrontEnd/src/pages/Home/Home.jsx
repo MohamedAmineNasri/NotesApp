@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
-import moment from 'moment'
+import moment from "moment";
 
 const Home = () => {
   const [openAddEditModal, setOpenAddEditModal] = useState({
@@ -20,6 +20,10 @@ const Home = () => {
   const [allNotes, setAllNotes] = useState([]);
 
   const navigate = useNavigate();
+
+  const handleEdit = (noteDetail) => {
+    setOpenAddEditModal({ isShown: true, data: noteDetail, type: "edit" });
+  };
 
   //Get User Info
   const getUserInfo = async () => {
@@ -60,18 +64,18 @@ const Home = () => {
       <div className="container mx-auto">
         <div className="grid grid-cols-3 gap-4 mt-8">
           {allNotes.map((item, index) => {
-            return(
+            return (
               <NoteCard
-              key={item._id}
-              title={item.title}
-              date={moment(item.createdOn).format('DD MMM YYYY')}
-              content={item.content}
-              tags={item.tags}
-              isPinned={item.isPinned}
-              onEdit={() => {}}
-              onDelete={() => {}}
-              onPinNote={() => {}}
-            />
+                key={item._id}
+                title={item.title}
+                date={moment(item.createdOn).format("DD MMM YYYY")}
+                content={item.content}
+                tags={item.tags}
+                isPinned={item.isPinned}
+                onEdit={() => handleEdit(item)}
+                onDelete={() => {}}
+                onPinNote={() => {}}
+              />
             );
           })}
         </div>
