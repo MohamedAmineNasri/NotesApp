@@ -10,6 +10,7 @@ import moment from "moment";
 import Toast from "../../components/ToastMessage/Toast";
 import EmptyCard from "../../components/EmptyCard/EmptyCard";
 import AddNoteImage from "../../../public/AddNote.png";
+import NotFoundImage from "../../../public/notfound.svg";
 
 const Home = () => {
   const [openAddEditModal, setOpenAddEditModal] = useState({
@@ -27,6 +28,8 @@ const Home = () => {
   const [userInfo, setUserInfo] = useState(null);
 
   const [allNotes, setAllNotes] = useState([]);
+
+  const [isSearch, setIsSearch] = useState(false);
 
   const navigate = useNavigate();
 
@@ -96,6 +99,25 @@ const Home = () => {
     }
   };
 
+  //Search for a Note
+  const onSearchNote = async (query) => {
+    try {
+      const response = await axiosInstance.get("/search-notes/", {
+        params: { query },
+      });
+      if (response.data && response.data.notes) {
+        setIsSearch(true);
+        setAllNotes(response.data.notes);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleClearSearch = () => {
+    setIsSearch(false), getAllNotes();
+  };
+
   useEffect(() => {
     getAllNotes();
     getUserInfo();
@@ -104,7 +126,12 @@ const Home = () => {
 
   return (
     <>
-      <NavBar userInfo={userInfo} />
+      <NavBar
+        userInfo={userInfo}
+        onSearchNote={onSearchNote}
+        handleClearSearch={handleClearSearch}
+        getAllNotes={getAllNotes}
+      />
       <div className="container mx-auto">
         {allNotes.length > 0 ? (
           <div className="grid grid-cols-3 gap-4 mt-8">
@@ -126,10 +153,14 @@ const Home = () => {
           </div>
         ) : (
           <EmptyCard
-            imageSrc={AddNoteImage}
-            message={`
+            imageSrc={isSearch ? NotFoundImage : AddNoteImage}
+            message={
+              isSearch
+                ? `Oops! No Notes found matching your search.`
+                : `
             Start creating your first note! Click the 'Add' button to jot down your thoughts, ideas, and reminders. Let's get started!
-            `}
+            `
+            }
           />
         )}
       </div>

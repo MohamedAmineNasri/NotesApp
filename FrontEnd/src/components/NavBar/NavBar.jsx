@@ -3,17 +3,24 @@ import ProfileInfo from "../Cards/ProfileInfo";
 import SearchBar from "../SearchBar/SearchBar";
 import { useState } from "react";
 
-const NavBar = ({ userInfo }) => {
+const NavBar = ({ userInfo, onSearchNote, handleClearSearch, getAllNotes }) => {
   const navigate = useNavigate();
   const onLogout = () => {
-    localStorage.clear()
+    localStorage.clear();
     navigate("/login");
   };
   const [searchQuery, SetSearchQuery] = useState("");
 
-  const handleSearch = () => {};
+  const handleSearch = () => {
+    if (searchQuery) {
+      onSearchNote(searchQuery);
+    } else {
+      getAllNotes();
+    }
+  };
   const onClearSearch = () => {
     SetSearchQuery("");
+    handleClearSearch();
   };
 
   return (
