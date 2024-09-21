@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import moment from "moment";
 import Toast from "../../components/ToastMessage/Toast";
+import EmptyCard from "../../components/EmptyCard/EmptyCard";
+import AddNoteImage from "../../../public/AddNote.png";
 
 const Home = () => {
   const [openAddEditModal, setOpenAddEditModal] = useState({
@@ -18,9 +20,9 @@ const Home = () => {
 
   const [showToastMsg, setShowToastMsg] = useState({
     isShown: false,
-    type: 'add',
-    data: null
-  })
+    type: "add",
+    data: null,
+  });
 
   const [userInfo, setUserInfo] = useState(null);
 
@@ -36,15 +38,15 @@ const Home = () => {
     setShowToastMsg({
       isShown: true,
       message,
-      type
-    })
-  }
+      type,
+    });
+  };
   const handleCloseToast = () => {
     setShowToastMsg({
       isShown: false,
-      message: ''
-    })
-  }
+      message: "",
+    });
+  };
 
   //Get User Info
   const getUserInfo = async () => {
@@ -73,6 +75,27 @@ const Home = () => {
     }
   };
 
+  //Delete note
+  const deleteNote = async (data) => {
+    const noteId = data._id;
+    try {
+      const response = await axiosInstance.delete("/delete-note/" + noteId);
+
+      if (response.data && !response.data.error) {
+        showToastMessage("Note Deleted Successfully", "delete");
+        getAllNotes();
+      }
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        console.log("An unexpexted error occurred. Please try again");
+      }
+    }
+  };
+
   useEffect(() => {
     getAllNotes();
     getUserInfo();
@@ -83,23 +106,32 @@ const Home = () => {
     <>
       <NavBar userInfo={userInfo} />
       <div className="container mx-auto">
-        <div className="grid grid-cols-3 gap-4 mt-8">
-          {allNotes.map((item, index) => {
-            return (
-              <NoteCard
-                key={item._id}
-                title={item.title}
-                date={moment(item.createdOn).format("DD MMM YYYY")}
-                content={item.content}
-                tags={item.tags}
-                isPinned={item.isPinned}
-                onEdit={() => handleEdit(item)}
-                onDelete={() => {}}
-                onPinNote={() => {}}
-              />
-            );
-          })}
-        </div>
+        {allNotes.length > 0 ? (
+          <div className="grid grid-cols-3 gap-4 mt-8">
+            {allNotes.map((item, index) => {
+              return (
+                <NoteCard
+                  key={item._id}
+                  title={item.title}
+                  date={moment(item.createdOn).format("DD MMM YYYY")}
+                  content={item.content}
+                  tags={item.tags}
+                  isPinned={item.isPinned}
+                  onEdit={() => handleEdit(item)}
+                  onDelete={() => deleteNote(item)}
+                  onPinNote={() => {}}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <EmptyCard
+            imageSrc={AddNoteImage}
+            message={`
+            Start creating your first note! Click the 'Add' button to jot down your thoughts, ideas, and reminders. Let's get started!
+            `}
+          />
+        )}
       </div>
       <button
         className="w-16 h-16 flex items-center justify-center rounded-2xl  bg-primary hover:bg-blue-600 absolute right-10 bottom-10 "
@@ -142,7 +174,7 @@ const Home = () => {
           showToastMessage={showToastMessage}
         />
       </Modal>
-      <Toast 
+      <Toast
         isShown={showToastMsg.isShown}
         message={showToastMsg.message}
         type={showToastMsg.type}
