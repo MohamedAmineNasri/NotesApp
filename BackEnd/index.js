@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const { authenticateToken } = require("./utilities");
 const User = require("./models/user.model");
 const Note = require("./models/note.model");
+const Message = require("./models/message.model");
 
 mongoose.connect(process.env.CONNECTIONSTRING);
 
@@ -24,6 +25,55 @@ app.get("/", (req, res) => {
   res.json({
     data: "Hello, World",
   });
+});
+//Create Message
+app.use("/create-message", async (req, res) => {
+  const { towho, message, tags, colorcode } = req.body;
+  if (!towho) {
+    return res.status(400).json({
+      message: "To is required",
+    });
+  }
+  if (!message) {
+    return res.status(400).json({
+      message: "message is required",
+    });
+  }
+  try {
+    const messageunsent = new Message({
+      towho,
+      message,
+      colorcode,
+      tags: tags || [],
+    });
+    await messageunsent.save();
+    return res.json({
+      error: false,
+      messageunsent,
+      message: "Message Added Successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: true,
+      message: "Internal Server Error",
+    });
+  }
+});
+
+app.get("/get-all-message", async (req, res) => {
+  try {
+    const messages = await Message.find({});
+    return res.json({
+      error: false,
+      messages: messages,
+      message: "All Messages retrieved successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: true,
+      message: "Internal Error",
+    });
+  }
 });
 
 //Create Account
