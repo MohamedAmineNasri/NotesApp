@@ -114,9 +114,28 @@ const Home = () => {
     }
   };
 
+  //Update isPinned
+  const updateIsPinned = async (noteData) => {
+    const noteId = noteData._id
+    try {
+      const respone =  await axiosInstance.put('/update-note-pinned/'+noteId, {
+        isPinned: !noteData.isPinned
+      } )
+      if(respone.data && respone.data.note) {
+        showToastMessage('Note Pin Is Updated Successfully')
+        getAllNotes()
+      }
+    } catch (error) {
+      if(error.response && error.respone.data && error.respone.data.message) {
+        console.log(error)
+      }
+    }
+  }
+
   const handleClearSearch = () => {
     setIsSearch(false), getAllNotes();
   };
+
 
   useEffect(() => {
     getAllNotes();
@@ -125,7 +144,7 @@ const Home = () => {
   }, []);
 
   return (
-    <>
+    <div className="md:relative h-screen	">
       <NavBar
         userInfo={userInfo}
         onSearchNote={onSearchNote}
@@ -134,7 +153,7 @@ const Home = () => {
       />
       <div className="container mx-auto">
         {allNotes.length > 0 ? (
-          <div className="grid grid-cols-3 gap-4 mt-8">
+          <div className="grid  gap-4 mt-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {allNotes.map((item, index) => {
               return (
                 <NoteCard
@@ -146,7 +165,7 @@ const Home = () => {
                   isPinned={item.isPinned}
                   onEdit={() => handleEdit(item)}
                   onDelete={() => deleteNote(item)}
-                  onPinNote={() => {}}
+                  onPinNote={() => updateIsPinned(item)}
                 />
               );
             })}
@@ -164,8 +183,9 @@ const Home = () => {
           />
         )}
       </div>
-      <button
-        className="w-16 h-16 flex items-center justify-center rounded-2xl  bg-primary hover:bg-blue-600 absolute right-10 bottom-10 "
+     <div className=" ">
+     <button
+        className=" fixed w-16 h-16 flex items-center justify-center rounded-2xl  bg-primary hover:bg-blue-600  right-1 md:right-10 md:bottom-5 bottom-3  "
         onClick={() => {
           setOpenAddEditModal({
             isShown: true,
@@ -176,6 +196,7 @@ const Home = () => {
       >
         <MdAdd className="text-[32px] text-white " />
       </button>
+     </div>
 
       <Modal
         isOpen={openAddEditModal.isShown}
@@ -211,7 +232,7 @@ const Home = () => {
         type={showToastMsg.type}
         onClose={handleCloseToast}
       />
-    </>
+    </div>
   );
 };
 

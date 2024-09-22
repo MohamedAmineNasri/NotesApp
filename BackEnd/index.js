@@ -289,7 +289,7 @@ app.put("/update-note-pinned/:noteId", authenticateToken, async (req, res) => {
     return res.json({
       error: false,
       note,
-      message: "Note Updated Successfully",
+      message: "Note Pin Is Updated Successfully",
     });
   } catch (error) {
     return res.status(500).json({
