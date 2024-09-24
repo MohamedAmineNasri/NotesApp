@@ -37,7 +37,7 @@ const MessageCard = ({ msg }) => {
 
 const UnSentMsgCard = ({ allMessages }) => {
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center m-7">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center gap-12">
         {allMessages.map((msg, index) => (
           <MessageCard key={index} msg={msg} />

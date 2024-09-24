@@ -18,14 +18,13 @@ const Hero = () => {
         />
       </div>
       <div>
-        <p className="flex justify-center items-center font-bold text-balance px-5 text-center">
+        <p className="flex justify-center items-center font-bold text-balance px-5 text-center tracking-wide">
           A sanctuary for your private notes—share your thoughts anonymously,
           while keeping your personal reflections secure.
         </p>
       </div>
-      <div className="flex justify-center items-center">
-        <Link to='/theunsentmsg' className="border border-slate-900 w-2/5 p-2 m-3 bg-[#2776b6] text-white hover:bg-[#33a2fd] text-center">
-          {/* <Link to='/theunsentmsg'>Submit Your Message</Link> */}
+      <div className="flex justify-center items-center m-3">
+        <Link to='/theunsentmsg' className="border border-slate-900 w-2/5 p-2 m-3 bg-[#2776b6] text-white hover:bg-[#33a2fd] text-center rounded-3xl tracking-widest">
           Submit Your Message
         </Link>
       </div>
