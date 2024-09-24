@@ -1,11 +1,10 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProfileInfo from "../Cards/ProfileInfo";
 import SearchBar from "../SearchBar/SearchBar";
 import { useState } from "react";
 
 const NavBar = ({ userInfo, onSearchNote, handleClearSearch, getAllNotes }) => {
   const navigate = useNavigate();
-  const location = useLocation(); // Get the current location
   const onLogout = () => {
     localStorage.clear();
     navigate("/login");
@@ -39,8 +38,7 @@ const NavBar = ({ userInfo, onSearchNote, handleClearSearch, getAllNotes }) => {
         </Link>
       </h2>
 
-      {/* Only show SearchBar if not on the '/' page */}
-      {localStorage.getItem("token") && location.pathname !== "/" ? (
+      {localStorage.getItem("token") ? (
         <SearchBar
           value={searchQuery}
           onChange={({ target }) => {
