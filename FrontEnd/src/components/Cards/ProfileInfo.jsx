@@ -23,7 +23,7 @@ const ProfileInfo = ({ onLogout, userInfo, navigate }) => {
         <p className="text-sm font-medium flex justify-center ">
           {userInfo?.fullName}
         </p>
-        <div className="flex items-center justify-between gap-2 px-5">
+        <div className="flex items-center justify-between gap-2 px-2 md:px-5">
           <button className="text-xs md:text-sm text-slate-700 underline tracking-widest ">
             {localStorage.getItem("token") ? (
               <Link to="/dashboard">Dashboard</Link>

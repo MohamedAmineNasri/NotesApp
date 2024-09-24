@@ -9,7 +9,7 @@ const SearchBarName = ({ value, onChange, handleSearch, onClearSearch }) => {
     }
   };
   return (
-    <div className="mx-auto w-3/4 flex items-center justify-center px-4 bg-slate-100 rounded-md">
+    <div className="mx-auto  md:w-3/4 flex items-center justify-center px-4 bg-slate-100 rounded-md">
       <input
         type="text"
         placeholder="Search for a name..."

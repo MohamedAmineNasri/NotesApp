@@ -26,21 +26,30 @@ const NavBar = ({ userInfo, onSearchNote, handleClearSearch, getAllNotes }) => {
   return (
     <div
       className="bg-white md:px-6 py-2 drop-shadow md:flex md:items-center md:justify-between
-      flex items-center gap-3 
+      flex items-center gap-3   
     "
     >
-      <h2 className="text-3xl font-medium text-black py-2 cursor-pointer">
-        <Link to='/'>Notes</Link>
+      <h2 className="text-3xl font-medium text-black py-2 cursor-pointer   ">
+        <Link to="/" className="flex justify-center items-center">
+          <div>
+            <img src="public/logoHD.png" alt="logo" className="h-[50px]" />
+          </div>
+          <div className="text-sm md:text-2xl">ThoughtStream</div>
+        </Link>
       </h2>
 
-      <SearchBar
-        value={searchQuery}
-        onChange={({ target }) => {
-          SetSearchQuery(target.value);
-        }}
-        handleSearch={handleSearch}
-        onClearSearch={onClearSearch}
-      />
+      {localStorage.getItem("token") ? (
+        <SearchBar
+          value={searchQuery}
+          onChange={({ target }) => {
+            SetSearchQuery(target.value);
+          }}
+          handleSearch={handleSearch}
+          onClearSearch={onClearSearch}
+        />
+      ) : (
+        ""
+      )}
 
       <ProfileInfo
         userInfo={userInfo}
