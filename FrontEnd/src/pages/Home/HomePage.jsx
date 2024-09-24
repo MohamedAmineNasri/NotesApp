@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar/NavBar";
 import axiosInstance from "../../utils/axiosInstance";
+import Hero from "../../components/Hero Section/Hero";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import SearchBarName from "../../components/SearchBar/SearchBarName";
+import UnSentMsgCard from "../../components/Cards/UnSentMsgCard";
 
 const HomePage = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -65,7 +69,9 @@ const HomePage = () => {
         handleClearSearch={handleClearSearch}
         getAllNotes={getAllNotes}
       />
-      
+      <Hero />
+      <SearchBarName />
+      <UnSentMsgCard />
     </>
   );
 };
