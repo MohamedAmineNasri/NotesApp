@@ -349,6 +349,31 @@ app.put("/update-note-pinned/:noteId", authenticateToken, async (req, res) => {
   }
 });
 
+app.get("/search-unsentmesg/", async (req, res) => {
+  const { query } = req.query;
+  if (!query) {
+    return res.status(400).json({
+      error: true,
+      message: "Search query is required",
+    });
+  }
+  try {
+    const matchingMsg = await Message.find({
+      $or: [{ towho: { $regex: new RegExp(query, "i") } }],
+    });
+    return res.json({
+      error: false,
+      messages: matchingMsg,
+      message: "Messages matching the search query retrieved successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: true,
+      message: "Internal Servver Error",
+    });
+  }
+});
+
 //Search Note
 app.get("/search-notes/", authenticateToken, async (req, res) => {
   const { user } = req.user;

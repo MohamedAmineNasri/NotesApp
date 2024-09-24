@@ -9,7 +9,8 @@ const MessageCard = ({ msg }) => {
         <label htmlFor="Name" className="flex items-center text-2xl">
           To:
         </label>
-        <span className="text-2xl">{msg.towho}</span> {/* Displaying the name */}
+        <span className="text-2xl">{msg.towho}</span>{" "}
+        {/* Displaying the name */}
         <div className="flex items-center justify-center ">
           <IoIosMail size={40} />
         </div>
@@ -19,17 +20,14 @@ const MessageCard = ({ msg }) => {
         <textarea
           readOnly
           placeholder="Type Your Message Here..."
-          className="
-            h-full w-full placeholder:text-start p-3
-             text-4xl outline-none "
-            style={{backgroundColor: msg.colorcode }}
-        >
-          {msg.message || "This is a test message to be sent later."}
-        </textarea>
+          className="h-full w-full placeholder:text-start p-3 text-4xl outline-none"
+          style={{ backgroundColor: msg.colorcode }}
+          value={msg.message || "This is a test message to be sent later."} // Use the 'value' prop instead of children
+        />
       </div>
 
       <div className="flex justify-around items-center pb-4">
-        {msg.tags.map((item)=> `#${item} `)}
+        {msg.tags.map((item) => `#${item} `)}
       </div>
     </div>
   );

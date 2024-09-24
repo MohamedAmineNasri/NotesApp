@@ -13,7 +13,6 @@ const HomePage = () => {
   const [isSearch, setIsSearch] = useState(false);
 
   const [allMessages, setAllMessages] = useState([]);
-  console.log(allMessages);
   //Get all unsent messages
   const getAllMessages = async () => {
     try {
@@ -66,9 +65,43 @@ const HomePage = () => {
     }
   };
 
-  const handleClearSearch = () => {
-    setIsSearch(false), getAllNotes();
+  const handleClearSearchName = () => {
+    setIsSearch(false), getAllMessages();
   };
+
+  const onSearchMsg = async (query) => {
+    try {
+      const respone = await axiosInstance.get("/search-unsentmesg/", {
+        params: { query },
+      });
+      if (respone.data && respone.data.messages) {
+        setIsSearch(true);
+        setAllMessages(respone.data.messages);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [searchQuery, SetSearchQuery] = useState("");
+
+  const handleSearch = () => {
+    if (searchQuery) {
+      onSearchMsg(searchQuery);
+    } else onSearchMsg();
+  };
+
+
+  
+  const handleClearSearch = () => {
+    setIsSearch(false), getAllMessages();
+  };
+
+  const onClearSearch = () => {
+    SetSearchQuery("");
+    handleClearSearch();
+  };
+
 
   useEffect(() => {
     getAllNotes();
@@ -86,7 +119,14 @@ const HomePage = () => {
         getAllNotes={getAllNotes}
       />
       <Hero />
-      <SearchBarName />
+      <SearchBarName
+        value={searchQuery}
+        onChange={({ target }) => {
+          SetSearchQuery(target.value);
+        }}
+        handleSearch={handleSearch}
+        onClearSearch={onClearSearch}
+      />
       <UnSentMsgCard allMessages={allMessages} />
     </>
   );
