@@ -28,7 +28,7 @@ const MessageCard = ({ msg }) => {
         </textarea>
       </div>
 
-      <div className="flex justify-evenly items-center">
+      <div className="flex justify-around items-center pb-4">
         {msg.tags.map((item)=> `#${item} `)}
       </div>
     </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { TypeAnimation } from "react-type-animation";
 
 const Hero = () => {
@@ -21,6 +22,12 @@ const Hero = () => {
           A sanctuary for your private notes—share your thoughts anonymously,
           while keeping your personal reflections secure.
         </p>
+      </div>
+      <div className="flex justify-center items-center">
+        <Link to='/theunsentmsg' className="border border-slate-900 w-2/5 p-2 m-3 bg-[#2776b6] text-white hover:bg-[#33a2fd] text-center">
+          {/* <Link to='/theunsentmsg'>Submit Your Message</Link> */}
+          Submit Your Message
+        </Link>
       </div>
     </div>
   );

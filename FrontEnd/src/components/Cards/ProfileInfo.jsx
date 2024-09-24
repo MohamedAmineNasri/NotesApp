@@ -21,7 +21,7 @@ const ProfileInfo = ({ onLogout, userInfo, navigate }) => {
 
       <div>
         <p className="text-sm font-medium flex justify-center ">{userInfo?.fullName}</p>
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center justify-between gap-2 px-5">
           <button className="text-xs md:text-sm text-slate-700 underline tracking-widest ">
             <Link to='/dashboard'>
               Dashboard
