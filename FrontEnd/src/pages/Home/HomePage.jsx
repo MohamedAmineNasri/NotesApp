@@ -11,6 +11,21 @@ const HomePage = () => {
   const [allNotes, setAllNotes] = useState([]);
 
   const [isSearch, setIsSearch] = useState(false);
+
+  const [allMessages, setAllMessages] = useState([]);
+  console.log(allMessages);
+  //Get all unsent messages
+  const getAllMessages = async () => {
+    try {
+      const response = await axiosInstance.get("/get-all-message");
+      if (response.data && response.data.messages) {
+        setAllMessages(response.data.messages);
+      }
+    } catch (error) {
+      console.log("An unexpected error occurred. Please try again");
+    }
+  };
+
   //Get all notes
   const getAllNotes = async () => {
     try {
@@ -19,7 +34,7 @@ const HomePage = () => {
         setAllNotes(response.data.notes);
       }
     } catch (error) {
-      console.log("An unexpexted error occurred. Please try again");
+      console.log("An unexpected error occurred. Please try again");
     }
   };
   //Get User Info
@@ -58,6 +73,7 @@ const HomePage = () => {
   useEffect(() => {
     getAllNotes();
     getUserInfo();
+    getAllMessages();
     return () => {};
   }, []);
 
@@ -71,7 +87,7 @@ const HomePage = () => {
       />
       <Hero />
       <SearchBarName />
-      <UnSentMsgCard />
+      <UnSentMsgCard allMessages={allMessages} />
     </>
   );
 };
