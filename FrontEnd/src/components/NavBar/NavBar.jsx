@@ -33,7 +33,7 @@ const NavBar = ({ userInfo, onSearchNote, handleClearSearch, getAllNotes }) => {
       <h2 className="text-3xl font-medium text-black py-2 cursor-pointer   ">
         <Link to="/" className="flex justify-center items-center">
           <div>
-            <img src="public/logoHD.png" alt="logo" className="h-[50px]" />
+            <img src="/logoHD.png" alt="logo" className="h-[50px]" />
           </div>
           <div className="text-sm md:text-2xl">ThoughtStream</div>
         </Link>
