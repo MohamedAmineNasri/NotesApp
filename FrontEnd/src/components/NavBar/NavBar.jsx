@@ -53,7 +53,7 @@ const NavBar = ({ userInfo, onSearchNote, handleClearSearch, getAllNotes }) => {
         ""
       )}
 
-      <div className="flex justify-end w-3/5">
+      <div className="flex justify-end w-3/5 md:w-1/5">
         <ProfileInfo
           userInfo={userInfo}
           onLogout={onLogout}
