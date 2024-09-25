@@ -10,6 +10,11 @@
 - **Tagging System**: Users can tag their messages to categorize or highlight content.
 - **Mobile Responsive**: The design is optimized for both desktop and mobile experiences.
 
+## Technologies Used
+
+- **MERN Stack**: MongoDB, Express.js, React.js, Node.js
+- **Styling**: Tailwind CSS
+
 ## Screenshots
 
 - **Add New Note**:
