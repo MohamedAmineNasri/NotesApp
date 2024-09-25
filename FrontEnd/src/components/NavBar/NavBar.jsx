@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const NavBar = ({ userInfo, onSearchNote, handleClearSearch, getAllNotes }) => {
   const navigate = useNavigate();
-  const location = useLocation(); // Get the current location
+  const location = useLocation();
   const onLogout = () => {
     localStorage.clear();
     navigate("/login");
@@ -27,7 +27,7 @@ const NavBar = ({ userInfo, onSearchNote, handleClearSearch, getAllNotes }) => {
   return (
     <div
       className="bg-white md:px-6 py-2 drop-shadow md:flex md:items-center md:justify-between
-      flex items-center gap-3   
+      flex items-center  gap-3   
     "
     >
       <h2 className="text-3xl font-medium text-black py-2 cursor-pointer   ">
@@ -53,11 +53,13 @@ const NavBar = ({ userInfo, onSearchNote, handleClearSearch, getAllNotes }) => {
         ""
       )}
 
-      <ProfileInfo
-        userInfo={userInfo}
-        onLogout={onLogout}
-        navigate={navigate}
-      />
+      <div className="flex justify-end w-3/5">
+        <ProfileInfo
+          userInfo={userInfo}
+          onLogout={onLogout}
+          navigate={navigate}
+        />
+      </div>
     </div>
   );
 };
